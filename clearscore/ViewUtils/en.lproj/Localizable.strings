@@ -1,0 +1,6 @@
+"creditScoreLabelText"              = "Your credit score is";
+"creditScoreMaxLabel"               = "out of %d";
+"mainViewControllerNavBarTitle"     = "Dashboard";
+"detailsViewControllerNavBarTitle"  = "Credit Report";
+
+"refreshNavBarButton"               = "Refresh";
