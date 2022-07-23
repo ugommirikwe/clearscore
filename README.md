@@ -1,25 +1,39 @@
 # Overview
-<img src="https://j.gifs.com/gpGA3j.gif" height="400" style="display: inline; float: left; margin: 0 1em 0 0"></img>
-This project is a simple exercise aimed at demonstrating some good practices in iOS app development. While it replicates a very tiny subset of features of the ClearScore app, it is in no way affiliated nor endorsed by the ClearScore company and can not be used for anything order than for demonstration purposes.
-<div style="clear: left; margin-bottom: 1em"></div>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top" width="20%">
+    <img align="left" src="readme_images/clearscore_small.gif"></img>
+    </td>
+    <td valign="top">
+  This project is a simple exercise aimed at demonstrating some good practices in iOS app development. While it replicates a very tiny subset of features of the ClearScore app, it is in no way affiliated nor endorsed by the ClearScore company and can not be used for anything order than for demonstration purposes.
+    </td>
+  </tr>
+</table>
 
 # Minimum iOS 13 Target
-The app is targetted at devices running iOS 13 or newer.
+The app is targetted at devices running iOS 13 or newer:<br/><br/>
 ![Deployment target](readme_images/ios_deployment_target.png)
 
 # Launch screen and icon using ClearScore logo
-<img src="readme_images/launch_screen.png" height="300" style="display: inline; float: left; margin-right: 1em"></img>
-This was added to make the app appear more refined when testing it out simulators or on users' phones. Please note that the author makes no representation of collaboration or affiliation between this project and the ClearScore company, neither is the app indicated to be considered for real-world use.
-<div style="clear: left; margin-bottom: 1em"></div>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top" width="20%">
+      <img src="readme_images/launch_screen.png"></img>
+    </td>
+    <td valign="top">
+    This was added to make the app appear more refined when testing it out simulators or on users' phones. Please note that the author makes no representation of collaboration or affiliation between this project and the ClearScore company, neither is the app indicated to be considered for real-world use.
+    </td>
+  </tr>
+</table>
 
 # Localized strings
-The project sets up an easily extensible internationalization (i18n) configuration to ease incremental localization (l10n) of the app in the future, using the standard [`Localizable.strings`](clearscore/ViewUtils/en.lproj/Localizable.strings) files:
+The project sets up an easily extensible internationalization (i18n) configuration to ease incremental localization (l10n) of the app in the future, using the standard [`Localizable.strings`](clearscore/ViewUtils/en.lproj/Localizable.strings) files:<br/><br/>
 [![Standard Localizable.strings file](readme_images/Localizable.strings.png)](clearscore/ViewUtils/en.lproj/Localizable.strings)
 
-but then wrapping the strings contained therein in `enum`s to ensure compile-time access safety anywhere else in the app:
+but then wrapping the strings contained therein in `enum`s to ensure compile-time access safety anywhere else in the app:<br/><br/>
 [![Compile time safe access](readme_images/localized_strings_enum.png)](clearscore/ViewUtils/R.Strings.swift)
 
-Usage in views and view controllers (Android developers will notice the "R" idiom 😊):
+Usage in views and view controllers (Android developers will notice the "R" idiom 😊):<br/><br/>
 [![Screenshot](readme_images/localized_strings_enum_usage.png)](clearscore/MainView/MainView.swift) 
 
 No third-party tools (e.g. SwiftGen) required.
@@ -28,23 +42,30 @@ No third-party tools (e.g. SwiftGen) required.
 The app's user interface is built with the UIKit framework but absolutely uses no Storyboard component. The UI elements are constructed programmatically using standard UIKiit APIs—UIView and UIViewController subclasses.
 
 # SwiftUI-style XCode Design Canvas Previews
-<img src="readme_images/xcode_preview_canvas.png" height="300" style="display: inline; float: left; margin-right: 1em"></img>
-To speed up development, the project includes debug-only [SwiftUI framework code](clearscore/ViewUtils/ViewPreviewers.swift) constructs that set up visual previews of the user interface elements constructed with the code written, right inside the Xcode IDE, and featuring real-time visual updates as changes are made to the code, quite like how SwiftUI development works.
-<div style="clear: left; margin-bottom: 1em"></div>
+
+<table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td valign="top" width="20%">
+            <img src="readme_images/xcode_preview_canvas.png"></img>
+        </td>
+        <td valign=top>
+    To speed up development, the project includes debug-only [SwiftUI framework code](clearscore/ViewUtils/ViewPreviewers.swift) constructs that set up visual previews of the user interface elements constructed with the code written, right inside the Xcode IDE, and featuring real-time visual updates as changes are made to the code, quite like how SwiftUI development works.
+        </td>
+    </tr>
+</table>
 
 # Decluttered UIViewControllers
 While the UI is constructed in code, some good practices are used:
-- proper separation of concerns and adherence to single responsibility principle, by moving the entire UI elements and layout code into subclasses of the `UIView` UIKit class. These subclasses are then "inflated" (ala Android UI XML inflation) in the `loadView()` methods of host `UIViewController` subclasses that represent screens of the app.
-<img src="readme_images/loadView.png" style="display:block; margin-right: 1em; clear: both"></img>
-<div style="clear: left;"></div>
+- proper separation of concerns and adherence to single responsibility principle, by moving the entire UI elements and layout code into subclasses of the `UIView` UIKit class. These subclasses are then "inflated" (ala Android UI XML inflation) in the `loadView()` methods of host `UIViewController` subclasses that represent screens of the app:<br><br>
+![loadView function](readme_images/loadView.png)
 
-- in mimicing modern reactive UI paradigms, particularly ReactJS, it uses idioms such as the naming of a `render` function for the UIView, which takes a `Props` argument and provides similar functionality of painting state changes to the screen: `UI = fn(state)`:
-<img src="readme_images/render_function.png" style="display:block; margin-right: 1em; clear: both"></img>
+- in mimicing modern reactive UI paradigms, particularly ReactJS, it uses idioms such as the naming of a `render` function for the UIView, which takes a `Props` argument and provides similar functionality of painting state changes to the screen: `UI = fn(state)`:<br><br>
+![render function](readme_images/render_function.png)
 
 # Unidirectional Data Flow—"State down, events up"
 - While using the MVVM pattern, but adhering to UDF principles, the view model exposes read-only observable properties that view controllers can bind to;
-- The views define UI state structures, `<UIVIew>.Props`, that containing `UIViewController`s can arrange those observable view model properties into while updating the views that display them on screen:
-<img src="readme_images/detailsview_props_struct.png" style="display:block; margin-right: 1em; clear: both"></img>
+- The views define UI state structures, `<UIVIew>.Props`, that containing `UIViewController`s can arrange those observable view model properties into while updating the views that display them on screen:<br><br>
+![Details view props struct](readme_images/detailsview_props_struct.png)
 
 - The views or view controllers cannot directly reach into the view model and modify the state held in it, rather it raises UI events and invokes methods on the view model, triggering (possibly asynchronous) operations that ultimately modifies the state held in the view model and notifying the view of this changes.
 
@@ -71,10 +92,10 @@ This project wouldn't be said to have demonstrated best practices without includ
 - Uses standard `UIView` *AccessibilityIdentifier* attribute to reference UI elements on screen, rather than static texts that may change depending on locale of the devices;
 - Uses the [Page Object](https://martinfowler.com/bliki/PageObject.html) pattern for a more expressive and intuitive test codebase;
 - Consolidates mock/test data code into [resuable](clearscore/TestFixtures/RemoteServiceAPIMock.swift) [test fixtures](clearscore/TestFixtures/CreditScoreAPIResponse%2BFixture.swift) used which are then explicitly excluded from the app's release builds by configuring Xcode build settings to exclude them;
-- Uses runtime `launchArguments` in the `XCUITestCase` to launch the app:
-<img src="readme_images/xcuitest_launch_arguments.png" style="display:block; margin: 1em; clear: both"></img> 
-and then checks for these `launchArguments` in the [`SceneDelegate scene(...)` function](clearscore/SceneDelegate.swift) to enable switching app dependencies to mocks for launching the app for testing on simulators or real devices.
-<img src="readme_images/scenedelegate_commandline_check.png" style="display:block; margin: 1em; clear: both"></img>
+- Uses runtime `launchArguments` in the `XCUITestCase` to launch the app:<br><br>
+![XCUITest launch arguments](readme_images/xcuitest_launch_arguments.png)<br><br>
+and then checks for these `launchArguments` in the [`SceneDelegate scene(...)` function](clearscore/SceneDelegate.swift) to enable switching app dependencies to mocks for launching the app for testing on simulators or real devices:<br><br>
+![SceneDelegate commandline check](readme_images/scenedelegate_commandline_check.png)
 
 # Code Hygiene:
 Guided by standard Swift linting conventions, the codebase aims to be as neat and easy to read as possible:
